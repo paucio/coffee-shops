@@ -3,7 +3,7 @@
 module Importer
     module Parsers    
         class BaseParser
-            def parse
+            def parse(data)
                 raise NotImplementedError, "Subclasses must implement the parse method"
             end
         end

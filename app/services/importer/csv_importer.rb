@@ -8,8 +8,10 @@ module Importer
         end
         
         def call(url)
-            csv_data = downloader.download(url)
-            parser.parse(csv_data)
+            tempfile = downloader.download(url)
+            parser.parse(tempfile).to_a
+        ensure
+            tempfile&.close!
         end
 
         private
