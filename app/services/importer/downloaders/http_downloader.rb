@@ -4,21 +4,24 @@ module Importer
     module Downloaders
         class HttpDownloader
             def download(url)
-                response = Faraday.get(url)
+                tempfile = Tempfile.new(['import', '.csv'])
 
-                validate_response!(response)
+                response = connection.get(url) do |req|
+                    req.options.on_data = lambda do |chunk, _overall_received_bytes|
+                        tempfile.write(chunk)
+                    end
+                end
 
-                response.body
-            rescue Faraday::ConnectionFailed => e
-                raise "Failed to connect to #{url}. Error: #{e.message}"
+                raise "Failed to download from #{url}. HTTP Status: #{response.status}" unless response.success?
+
+                tempfile.rewind
+                tempfile
             end
 
             private
 
-            def validate_response!(response)
-                return if response.success?
-                
-                raise "Failed to download CSV data from #{url}. HTTP Status: #{response.status}"
+            def connection
+                @connection ||= Faraday.new
             end
         end
     end
