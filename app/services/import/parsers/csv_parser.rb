@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Importer
+module Import
   module Parsers
     class CsvParser < BaseParser
       EXPECTED_COLUMNS = 3

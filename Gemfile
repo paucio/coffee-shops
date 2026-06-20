@@ -68,4 +68,5 @@ group :test do
   # Use system testing [https://github.com/rspec/rspec-rails#system-specs]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "factory_bot_rails"
 end
