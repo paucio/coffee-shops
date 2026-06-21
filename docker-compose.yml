@@ -14,6 +14,16 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   web:
     build:
       context: .
@@ -22,6 +32,7 @@ services:
     environment:
       RAILS_ENV: development
       DATABASE_URL: postgres://coffee_shops:password@db/coffee_shops_development
+      REDIS_URL: redis://redis:6379/1
     volumes:
       - .:/rails
       - bundle_cache:/usr/local/bundle
@@ -29,6 +40,8 @@ services:
       - "3000:3000"
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
 volumes:
