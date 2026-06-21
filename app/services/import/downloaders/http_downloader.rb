@@ -12,7 +12,9 @@ module Import
           end
         end
 
-        raise "Failed to download from #{url}. HTTP Status: #{response.status}" unless response.success?
+        unless response.success?
+          raise Import::Errors::DownloadError, "Failed to download from #{url}. HTTP Status: #{response.status}"
+        end
 
         tempfile.rewind
         tempfile
