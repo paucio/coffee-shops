@@ -30,7 +30,7 @@ RSpec.describe CoffeeShopImportJob do
     it 'passes the CoffeeShop unique constraint config' do
       subject
       expect(ImportService).to have_received(:new).with(
-        hash_including(unique_by: [:x, :y], update_only: [:name])
+        hash_including(unique_by: [ :x, :y ], update_only: [ :name ])
       )
     end
 

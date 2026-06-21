@@ -7,8 +7,8 @@ RSpec.describe ImportService do
     described_class.new(
       importer: importer,
       model: model,
-      unique_by: [:x, :y],
-      update_only: [:name]
+      unique_by: [ :x, :y ],
+      update_only: [ :name ]
     )
   end
 
@@ -32,8 +32,8 @@ RSpec.describe ImportService do
       subject.call(url)
       expect(model).to have_received(:upsert_all).with(
         records,
-        unique_by: [:x, :y],
-        update_only: [:name],
+        unique_by: [ :x, :y ],
+        update_only: [ :name ],
         record_timestamps: true
       )
     end

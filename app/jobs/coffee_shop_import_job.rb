@@ -10,8 +10,8 @@ class CoffeeShopImportJob < ApplicationJob
     ImportService.new(
       importer: build_importer,
       model: CoffeeShop,
-      unique_by: [:x, :y],
-      update_only: [:name]
+      unique_by: [ :x, :y ],
+      update_only: [ :name ]
     ).call(url)
   end
 
