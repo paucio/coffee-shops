@@ -5,4 +5,3 @@ module Import
     class DownloadError < StandardError; end
   end
 end
-
