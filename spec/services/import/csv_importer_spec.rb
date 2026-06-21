@@ -11,7 +11,7 @@ RSpec.describe Import::CsvImporter do
   let(:parser) { instance_double(Import::Parsers::CsvParser) }
   let(:mapper) { instance_double(Import::Mappers::CoffeeShopCsvMapper) }
   let(:tempfile) { instance_double(Tempfile) }
-  let(:url) { 'http://example.com/data.csv' }
+  let(:url) { 'http://example.com/coffee_shops.csv' }
 
   let(:raw_rows) do
     [
