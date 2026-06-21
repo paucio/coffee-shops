@@ -14,7 +14,7 @@ RSpec.describe ImportService do
 
   let(:importer) { instance_double(Import::CsvImporter) }
   let(:model) { class_double(CoffeeShop) }
-  let(:url) { 'http://example.com/data.csv' }
+  let(:url) { 'http://example.com/coffee_shops.csv' }
   let(:records) { attributes_for_list(:coffee_shop, 1) }
 
   before do

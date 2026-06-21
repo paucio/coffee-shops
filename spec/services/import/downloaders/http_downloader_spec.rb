@@ -6,7 +6,7 @@ RSpec.describe Import::Downloaders::HttpDownloader do
   subject { described_class.new }
 
   let(:connection) { instance_double(Faraday::Connection) }
-  let(:url) { 'http://example.com/data.csv' }
+  let(:url) { 'http://example.com/coffee_shops.csv' }
   let(:status) { 200 }
   let(:success) { true }
   let(:response) { instance_double(Faraday::Response, success?: success, status: status) }
