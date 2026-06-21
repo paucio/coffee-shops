@@ -9,7 +9,7 @@ module Import
         Enumerator.new do |yielder|
           CSV.new(csv_data, headers: false).each do |row|
             next unless row.size == EXPECTED_COLUMNS
-            yielder << row.fields
+            yielder << row
           end
         end
       end

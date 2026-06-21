@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe CoffeeShopImportJob do
+  subject { described_class.perform_now(url) }
+
   let(:url) { 'http://example.com/coffee_shops.csv' }
   let(:service) { instance_double(ImportService, call: nil) }
 
@@ -12,36 +14,38 @@ RSpec.describe CoffeeShopImportJob do
 
   describe '#perform' do
     it 'builds ImportService with CoffeeShop as the model' do
-      described_class.perform_now(url)
+      subject
       expect(ImportService).to have_received(:new).with(
         hash_including(model: CoffeeShop)
       )
     end
 
     it 'builds ImportService with a CsvImporter' do
-      described_class.perform_now(url)
+      subject
       expect(ImportService).to have_received(:new).with(
         hash_including(importer: an_instance_of(Import::CsvImporter))
       )
     end
 
     it 'passes the CoffeeShop unique constraint config' do
-      described_class.perform_now(url)
+      subject
       expect(ImportService).to have_received(:new).with(
         hash_including(unique_by: [:x, :y], update_only: [:name])
       )
     end
 
     it 'calls the service with the url' do
-      described_class.perform_now(url)
+      subject
       expect(service).to have_received(:call).with(url)
     end
   end
 
   describe 'enqueueing' do
-    it 'enqueues on the default queue' do
-      expect { described_class.perform_later(url) }
-        .to have_enqueued_job(described_class).on_queue('default').with(url)
+    subject { described_class.perform_later(url) }
+
+    it 'enqueues on the coffee_shop_queue' do
+      expect { subject }
+        .to have_enqueued_job(described_class).on_queue('coffee_shop_queue').with(url)
     end
   end
 end

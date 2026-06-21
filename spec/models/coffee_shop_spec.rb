@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe CoffeeShop, type: :model do
+  subject { build(:coffee_shop) }
+
   describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:x) }

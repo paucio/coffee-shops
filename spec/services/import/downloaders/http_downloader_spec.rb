@@ -31,14 +31,19 @@ RSpec.describe Import::Downloaders::HttpDownloader do
       let(:status) { 400 }
       let(:success) { false }
 
-      it 'raises an error with the HTTP status' do
+      it 'raises a DownloadError' do
         expect { subject.download(url) }
-          .to raise_error(RuntimeError, /HTTP Status: 400/)
+          .to raise_error(Import::Errors::DownloadError)
+      end
+
+      it 'includes the HTTP status in the error message' do
+        expect { subject.download(url) }
+          .to raise_error(Import::Errors::DownloadError, /HTTP Status: 400/)
       end
 
       it 'includes the url in the error message' do
         expect { subject.download(url) }
-          .to raise_error(RuntimeError, /#{Regexp.escape(url)}/)
+          .to raise_error(Import::Errors::DownloadError, /#{Regexp.escape(url)}/)
       end
     end
   end

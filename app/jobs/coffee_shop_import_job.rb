@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class CoffeeShopImportJob < ApplicationJob
-  queue_as :default
+  queue_as :coffee_shop_queue
+
+  retry_on Import::Errors::DownloadError, Faraday::ConnectionFailed, Faraday::TimeoutError,
+         wait: 1.minute, attempts: 3
 
   def perform(url)
     ImportService.new(
