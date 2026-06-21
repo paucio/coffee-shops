@@ -8,18 +8,21 @@ RSpec.describe ImportService do
       importer: importer,
       model: model,
       unique_by: [ :x, :y ],
-      update_only: [ :name ]
+      update_only: [ :name ],
+      after_persist: after_persist
     )
   end
 
-  let(:importer) { instance_double(Import::CsvImporter) }
-  let(:model) { class_double(CoffeeShop) }
-  let(:url) { 'http://example.com/coffee_shops.csv' }
-  let(:records) { attributes_for_list(:coffee_shop, 1) }
+  let(:importer)      { instance_double(Import::CsvImporter) }
+  let(:model)         { class_double(CoffeeShop) }
+  let(:after_persist) { instance_double(Proc, call: nil) }
+  let(:url)           { 'http://example.com/coffee_shops.csv' }
+  let(:records)       { attributes_for_list(:coffee_shop, 1) }
+  let(:upsert_result) { instance_double(ActiveRecord::Result, rows: [ [ 1, 0.0, 0.0 ] ]) }
 
   before do
     allow(importer).to receive(:call).with(url).and_return(records)
-    allow(model).to receive(:upsert_all)
+    allow(model).to receive(:upsert_all).and_return(upsert_result)
   end
 
   describe '#call' do
@@ -34,8 +37,22 @@ RSpec.describe ImportService do
         records,
         unique_by: [ :x, :y ],
         update_only: [ :name ],
-        record_timestamps: true
+        record_timestamps: true,
+        returning: [ :id, :x, :y ]
       )
+    end
+
+    it 'calls after_persist with the upsert result' do
+      subject.call(url)
+      expect(after_persist).to have_received(:call).with(upsert_result)
+    end
+
+    context 'without after_persist' do
+      let(:after_persist) { nil }
+
+      it 'raises an error' do
+        expect { subject.call(url) }.to raise_error
+      end
     end
 
     context 'with empty records' do
@@ -44,6 +61,11 @@ RSpec.describe ImportService do
       it 'does not call upsert_all' do
         subject.call(url)
         expect(model).not_to have_received(:upsert_all)
+      end
+
+      it 'does not call after_persist' do
+        subject.call(url)
+        expect(after_persist).not_to have_received(:call)
       end
     end
 

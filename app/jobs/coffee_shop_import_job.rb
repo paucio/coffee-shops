@@ -11,7 +11,8 @@ class CoffeeShopImportJob < ApplicationJob
       importer: build_importer,
       model: CoffeeShop,
       unique_by: [ :x, :y ],
-      update_only: [ :name ]
+      update_only: [ :name ],
+      after_persist: Finder::SpatialIndexer.new(grid: Finder::Grids::CoffeeShop).method(:multi_index)
     ).call(url)
   end
 

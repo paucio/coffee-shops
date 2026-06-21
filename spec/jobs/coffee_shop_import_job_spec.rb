@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe CoffeeShopImportJob do
   subject { described_class.perform_now(url) }
 
-  let(:url) { 'http://example.com/coffee_shops.csv' }
+  let(:url)     { 'http://example.com/coffee_shops.csv' }
   let(:service) { instance_double(ImportService, call: nil) }
 
   before do
@@ -31,6 +31,13 @@ RSpec.describe CoffeeShopImportJob do
       subject
       expect(ImportService).to have_received(:new).with(
         hash_including(unique_by: [ :x, :y ], update_only: [ :name ])
+      )
+    end
+
+    it 'passes a SpatialIndexer#multi_index method as after_persist' do
+      subject
+      expect(ImportService).to have_received(:new).with(
+        hash_including(after_persist: an_instance_of(Method))
       )
     end
 

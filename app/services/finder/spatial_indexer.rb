@@ -2,17 +2,19 @@
 
 module Finder
   class SpatialIndexer
+    Point = Data.define(:id, :x, :y)
+
     def initialize(grid:)
-      @grid  = grid
+      @grid = grid
+    end
+
+    def multi_index(result)
+      result.rows.map { |id, x, y| Point.new(id: id, x: x, y: y) }.each { |point| index(point) }
     end
 
     def index(point)
       cell = grid.cell_for_coordinates(point.x, point.y)
       REDIS.sadd(grid.redis_key(cell[:x], cell[:y]), point.id)
-    end
-
-    def multi_index(points)
-      points.each { |point| index(point) }
     end
 
     private
