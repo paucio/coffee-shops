@@ -44,14 +44,14 @@ RSpec.describe ImportService do
 
     it 'calls after_persist with the upsert result' do
       subject.call(url)
-      expect(after_persist).to have_received(:call).with(upsert_result)
+      expect(after_persist).to have_received(:call).with(upsert_result.rows)
     end
 
     context 'without after_persist' do
       let(:after_persist) { nil }
 
-      it 'raises an error' do
-        expect { subject.call(url) }.to raise_error
+      it 'raises NoMethodError' do
+        expect { subject.call(url) }.to raise_error(NoMethodError)
       end
     end
 

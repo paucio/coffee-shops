@@ -41,6 +41,6 @@ class ImportService
       returning: [ :id, :x, :y ]
     )
 
-    after_persist.call(result)
+    after_persist.call(result.rows)
   end
 end

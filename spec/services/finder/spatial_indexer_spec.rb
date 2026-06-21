@@ -27,12 +27,12 @@ RSpec.describe Finder::SpatialIndexer do
   end
 
   describe '#multi_index' do
-    let(:result) do
-      instance_double(ActiveRecord::Result, rows: [ [ 42, 75.0, 125.0 ], [ 99, 0.0, 0.0 ] ])
+    let(:points) do
+      [ [ 42, 75.0, 125.0 ], [ 99, 0.0, 0.0 ] ]
     end
 
     it 'indexes each point from the result rows' do
-      subject.multi_index(result)
+      subject.multi_index(points)
 
       expect(REDIS).to have_received(:sadd).with('coffee_shop_grid:x:1:y:2', 42)
       expect(REDIS).to have_received(:sadd).with('coffee_shop_grid:x:0:y:0', 99)

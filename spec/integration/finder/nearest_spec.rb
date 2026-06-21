@@ -12,14 +12,11 @@ RSpec.describe Finder::Nearest, :integration do
   let!(:far_shop)    { create(:coffee_shop, name: 'Far Shop',    x: 50.0, y: 50.0) }
 
   before do
-    indexer.multi_index([ near_shop, mid_shop, far_shop ])
-  end
-
-  after do
-    REDIS.del(
-      Finder::Grids::CoffeeShop.redis_key(0, 0),
-      Finder::Grids::CoffeeShop.redis_key(1, 1)
-    )
+    indexer.multi_index([
+      near_shop.attributes.values_at('id', 'x', 'y'),
+      mid_shop.attributes.values_at('id', 'x', 'y'),
+      far_shop.attributes.values_at('id', 'x', 'y')
+    ])
   end
 
   describe '#call' do
@@ -58,12 +55,7 @@ RSpec.describe Finder::Nearest, :integration do
     end
 
     context 'when no shops are indexed' do
-      before do
-        REDIS.del(
-          Finder::Grids::CoffeeShop.redis_key(0, 0),
-          Finder::Grids::CoffeeShop.redis_key(1, 1)
-        )
-      end
+      before { REDIS.flushdb }
 
       it 'returns an empty array' do
         expect(subject.call(x: 0.0, y: 0.0)).to be_empty

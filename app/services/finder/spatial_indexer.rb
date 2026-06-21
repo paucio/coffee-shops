@@ -8,8 +8,8 @@ module Finder
       @grid = grid
     end
 
-    def multi_index(result)
-      result.rows.map { |id, x, y| Point.new(id: id, x: x, y: y) }.each { |point| index(point) }
+    def multi_index(points)
+      points.map { |id, x, y| Point.new(id: id, x: x, y: y) }.each { |point| index(point) }
     end
 
     def index(point)
