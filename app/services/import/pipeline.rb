@@ -10,7 +10,7 @@ module Import
 
     def call(url)
       tempfile = downloader.download(url)
-      parser.parse(tempfile).filter_map { |row| mapper.call(row) }
+      parser.parse(tempfile, mapper.expected_columns).filter_map { |row| mapper.call(row) }
     ensure
       tempfile&.close!
     end

@@ -12,6 +12,10 @@ module Import
       rescue ArgumentError, TypeError
         nil
       end
+
+      def self.expected_columns
+        %i[name x y]
+      end
     end
   end
 end
