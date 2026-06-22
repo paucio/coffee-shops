@@ -58,6 +58,21 @@ RSpec.describe 'GET /coffee_shops/nearest', type: :request do
     end
   end
 
+  context 'when a database error occurs' do
+    before do
+      allow(finder).to receive(:call).and_raise(ActiveRecord::StatementInvalid)
+      get '/coffee_shops/nearest', params: { x: '1.0', y: '2.0' }
+    end
+
+    it 'returns 503' do
+      expect(response).to have_http_status(:service_unavailable)
+    end
+
+    it 'returns a JSON error body' do
+      expect(response.parsed_body).to include('error')
+    end
+  end
+
   context 'with invalid param types' do
     it 'returns 400 when x is not a number' do
       get '/coffee_shops/nearest', params: { x: 'abc', y: '2.0' }
