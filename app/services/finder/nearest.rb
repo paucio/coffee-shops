@@ -2,13 +2,15 @@
 
 module Finder
   class Nearest
+    DEFAULT_LIMIT = ENV.fetch("NEAREST_DEFAULT_LIMIT", 3).to_i
+
     def initialize(grid:, model:)
       @grid   = grid
       @model  = model
       @search = RadiusSearch.new(grid: grid)
     end
 
-    def call(x:, y:, limit: 3)
+    def call(x:, y:, limit: DEFAULT_LIMIT)
       cell = grid.cell_for_coordinates(x, y)
       ids  = search.call(cell_x: cell[:x], cell_y: cell[:y], limit: limit)
 
