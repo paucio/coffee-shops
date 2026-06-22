@@ -21,7 +21,7 @@ RSpec.describe CoffeeShopImportJob, :integration do
     allow(Faraday).to receive(:new).and_return(connection)
     allow(connection).to receive(:get).with(url) do |&block|
       req = double("request", options: double("options").tap do |opts|
-        allow(opts).to receive(:on_data=) { |proc| proc.call(csv_content, csv_content.bytesize) }
+        allow(opts).to receive(:on_data=) { |proc| proc.call(csv_content, csv_content.bytesize, nil) }
       end)
       block.call(req)
       response
@@ -66,7 +66,7 @@ RSpec.describe CoffeeShopImportJob, :integration do
         bad_csv = "Good Cafe,1.0,2.0\nBad Cafe,not_a_float,2.0\n"
         allow(connection).to receive(:get).with(url) do |&block|
           req = double("request", options: double("options").tap do |opts|
-            allow(opts).to receive(:on_data=) { |proc| proc.call(bad_csv, bad_csv.bytesize) }
+            allow(opts).to receive(:on_data=) { |proc| proc.call(bad_csv, bad_csv.bytesize, nil) }
           end)
           block.call(req)
           response
