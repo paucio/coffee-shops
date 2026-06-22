@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   stale_when_importmap_changes
 
   rescue_from ActiveRecord::StatementInvalid, with: :service_unavailable
-  
+
   rescue_from ActionController::BadRequest do |exception|
     render json: { error: exception.message }, status: :bad_request
   end
