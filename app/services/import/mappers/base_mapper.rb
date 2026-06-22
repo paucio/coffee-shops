@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Base class for all mappers.
+# Mappers are responsible for transforming a row of data into a format suitable for the target model.
+# They also define the expected columns in the input data.
 module Import
   module Mappers
     class BaseMapper

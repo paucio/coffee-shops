@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Downloader for fetching files via HTTP.
+# It writes the response body to a temporary file.
 module Import
   module Downloaders
     class HttpDownloader

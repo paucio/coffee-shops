@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Job to import coffee shop data from a CSV file located at a given URL.
+# The job will download the CSV, parse it, map the data to the CoffeeShop model and perform a bulk upsert operation.
+# After persisting the data, it will also index the coffee shops spatially for efficient querying.
 class CoffeeShopImportJob < ApplicationJob
   queue_as :coffee_shop_queue
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Mapper for converting CSV rows to CoffeeShop attributes.
 module Import
   module Mappers
     class CoffeeShopCsvMapper < BaseMapper

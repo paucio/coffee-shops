@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Parser for handling CSV data.
 module Import
   module Parsers
     class CsvParser < BaseParser
