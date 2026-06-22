@@ -34,7 +34,7 @@ RSpec.describe CoffeeShopImportJob do
       )
     end
 
-    it 'passes a SpatialIndexer#multi_index method as after_persist' do
+    it 'passes a GridIndexer#multi_index method as after_persist' do
       subject
       expect(Import::BulkUpsert).to have_received(:new).with(
         hash_including(after_persist: an_instance_of(Method))

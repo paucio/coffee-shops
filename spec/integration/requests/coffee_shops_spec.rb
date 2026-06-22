@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'GET /coffee_shops/nearest', :integration, type: :request do
-  let(:indexer) { Import::SpatialIndexer.new(grid: Finder::Grids::CoffeeShop) }
+  let(:indexer) { Import::GridIndexer.new(grid: Finder::Grids::CoffeeShop) }
 
   let!(:near_shop) { create(:coffee_shop, name: 'Near Shop', x: 1.0,  y: 1.0) }
   let!(:mid_shop)  { create(:coffee_shop, name: 'Mid Shop',  x: 5.0,  y: 5.0) }

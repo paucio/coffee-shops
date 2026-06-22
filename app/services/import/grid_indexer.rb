@@ -5,7 +5,7 @@
 # and provides methods to index multiple points or a single point
 # into Redis for efficient spatial querying.
 module Import
-  class SpatialIndexer
+  class GridIndexer
     Point = Data.define(:id, :x, :y)
 
     def initialize(grid:)
