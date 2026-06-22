@@ -7,7 +7,7 @@ module Import
         tempfile = Tempfile.new([ "import", ".csv" ])
 
         response = connection.get(url) do |req|
-          req.options.on_data = lambda do |chunk, _overall_received_bytes|
+          req.options.on_data = lambda do |chunk, _overall_received_bytes, _env|
             tempfile.write(chunk)
           end
         end

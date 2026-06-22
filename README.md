@@ -28,22 +28,53 @@ For the provided coordinates X=47.6 and Y=-122.4 the response should contain the
 
 
 
-Things you may want to cover:
+## Ruby version
 
-* Ruby version
+Ruby 4.0.5 (see `.ruby-version`)
 
-* System dependencies
+## System dependencies
 
-* Configuration
+- Docker & Docker Compose
 
-* Database creation
+## Configuration
 
-* Database initialization
+Copy the example env file and fill in your values:
 
-* How to run the test suite
+```bash
+cp .env.example .env
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+The following variables are required:
 
-* Deployment instructions
+| Variable | Description |
+|---|---|
+| `POSTGRES_USER` | PostgreSQL username |
+| `POSTGRES_PASSWORD` | PostgreSQL password |
+| `DATABASE_URL` | Full PostgreSQL connection URL |
+| `REDIS_URL` | Redis connection URL |
+| `NEAREST_DEFAULT_LIMIT` | Default number of results returned (default: 3) |
 
-* ...
+## Starting the app
+
+```bash
+docker compose up
+```
+
+## Database creation & initialization
+
+```bash
+docker compose run --rm web bin/rails db:create db:migrate
+```
+
+## How to run the test suite
+
+```bash
+docker compose run --rm -e RAILS_ENV=test web bundle exec rspec
+```
+
+To run a specific file:
+
+```bash
+docker compose run --rm -e RAILS_ENV=test web bundle exec rspec spec/requests/coffee_shops_spec.rb
+```
+
