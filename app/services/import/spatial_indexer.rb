@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Finder
+module Import
   class SpatialIndexer
     Point = Data.define(:id, :x, :y)
 

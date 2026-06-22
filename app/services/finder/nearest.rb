@@ -2,7 +2,7 @@
 
 module Finder
   class Nearest
-    def initialize(grid: Grids::CoffeeShop, model: CoffeeShop)
+    def initialize(grid:, model:)
       @grid   = grid
       @model  = model
       @search = RadiusSearch.new(grid: grid)
@@ -22,13 +22,13 @@ module Finder
     def find_nearest(ids, x, y, limit)
       model
         .where(id: ids)
-        .map { |shop| { name: shop.name, x: shop.x, y: shop.y, distance: distance(shop, x, y) } }
+        .map { |record| { id: record.id, name: record.name, x: record.x, y: record.y, distance: distance(record, x, y) } }
         .sort_by { |h| h[:distance] }
         .first(limit)
     end
 
-    def distance(shop, x, y)
-      Math.sqrt(((shop.x - x) ** 2) + ((shop.y - y) ** 2)).round(4)
+    def distance(record, x, y)
+      Math.sqrt(((record.x - x) ** 2) + ((record.y - y) ** 2)).round(4)
     end
   end
 end

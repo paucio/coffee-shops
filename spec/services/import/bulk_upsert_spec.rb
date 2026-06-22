@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ImportService do
+RSpec.describe Import::BulkUpsert do
   subject do
     described_class.new(
       importer: importer,
@@ -13,7 +13,7 @@ RSpec.describe ImportService do
     )
   end
 
-  let(:importer)      { instance_double(Import::CsvImporter) }
+  let(:importer)      { instance_double(Import::Pipeline) }
   let(:model)         { class_double(CoffeeShop) }
   let(:after_persist) { instance_double(Proc, call: nil) }
   let(:url)           { 'http://example.com/coffee_shops.csv' }

@@ -7,19 +7,19 @@ class CoffeeShopImportJob < ApplicationJob
          wait: 1.minute, attempts: 3
 
   def perform(url)
-    ImportService.new(
-      importer: build_importer,
+    Import::BulkUpsert.new(
+      importer: build_pipeline,
       model: CoffeeShop,
       unique_by: [ :x, :y ],
       update_only: [ :name ],
-      after_persist: Finder::SpatialIndexer.new(grid: Finder::Grids::CoffeeShop).method(:multi_index)
+      after_persist: Import::SpatialIndexer.new(grid: Finder::Grids::CoffeeShop).method(:multi_index)
     ).call(url)
   end
 
   private
 
-  def build_importer
-    Import::CsvImporter.new(
+  def build_pipeline
+    Import::Pipeline.new(
       downloader: Import::Downloaders::HttpDownloader.new,
       parser: Import::Parsers::CsvParser.new,
       mapper: Import::Mappers::CoffeeShopCsvMapper.new

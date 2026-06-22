@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Finder::SpatialIndexer do
+RSpec.describe Import::SpatialIndexer do
   subject { described_class.new(grid: grid) }
 
   let(:grid)  { Finder::Grids::CoffeeShop }

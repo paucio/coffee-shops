@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Import
-  class CsvImporter
+  class Pipeline
     def initialize(downloader:, parser:, mapper:)
       @downloader = downloader
       @parser = parser

@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Finder::Nearest, :integration do
-  subject { described_class.new }
+  subject { described_class.new(grid: Finder::Grids::CoffeeShop, model: CoffeeShop) }
 
-  let(:indexer) { Finder::SpatialIndexer.new(grid: Finder::Grids::CoffeeShop) }
+  let(:indexer) { Import::SpatialIndexer.new(grid: Finder::Grids::CoffeeShop) }
 
   let!(:near_shop)   { create(:coffee_shop, name: 'Near Shop',   x: 1.0,  y: 1.0) }
   let!(:mid_shop)    { create(:coffee_shop, name: 'Mid Shop',    x: 5.0,  y: 5.0) }
@@ -31,6 +31,7 @@ RSpec.describe Finder::Nearest, :integration do
         result = subject.call(x: 0.0, y: 0.0, limit: 1)
 
         expect(result.first).to include(
+          id: near_shop.id,
           name: 'Near Shop',
           x: 1.0,
           y: 1.0,

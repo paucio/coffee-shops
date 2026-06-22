@@ -9,9 +9,9 @@ RSpec.describe Finder::Nearest do
   let(:model)  { class_double(CoffeeShop) }
   let(:search) { instance_double(Finder::RadiusSearch) }
 
-  let(:shop_a) { instance_double(CoffeeShop, name: 'Near Shop',  x: 1.0, y: 1.0) }
-  let(:shop_b) { instance_double(CoffeeShop, name: 'Mid Shop', x: 5.0, y: 5.0) }
-  let(:shop_c) { instance_double(CoffeeShop, name: 'Far Shop',   x: 10.0, y: 10.0) }
+  let(:shop_a) { instance_double(CoffeeShop, id: 1, name: 'Near Shop',  x: 1.0, y: 1.0) }
+  let(:shop_b) { instance_double(CoffeeShop, id: 2, name: 'Mid Shop', x: 5.0, y: 5.0) }
+  let(:shop_c) { instance_double(CoffeeShop, id: 3, name: 'Far Shop',   x: 10.0, y: 10.0) }
 
   before do
     allow(Finder::RadiusSearch).to receive(:new).and_return(search)
