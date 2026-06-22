@@ -42,6 +42,10 @@ gem "image_processing", "~> 1.2"
 
 gem "faraday", "~> 2.7"
 
+gem "jsonapi-serializer"
+
+gem "redis", "~> 5.0"
+
 gem "csv", "~> 3.2"
 
 group :development, :test do

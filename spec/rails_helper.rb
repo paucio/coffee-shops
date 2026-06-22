@@ -78,6 +78,12 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
+  # Flush the test Redis database before and after each integration example so
+  # spatial index keys never leak between tests. Scoped to :integration so unit
+  # specs that stub REDIS don't require a live connection.
+  config.before(:each, :integration) { REDIS.flushdb }
+  config.after(:each, :integration) { REDIS.flushdb }
+
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:

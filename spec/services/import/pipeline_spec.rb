@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Import::CsvImporter do
+RSpec.describe Import::Pipeline do
   subject do
     described_class.new(downloader: downloader, parser: parser, mapper: mapper)
   end
