@@ -63,7 +63,13 @@ docker compose up
 ## Database creation & initialization
 
 ```bash
-docker compose run --rm web bin/rails db:create db:migrate
+docker compose run --rm web bundle exec rails db:create db:migrate
+```
+
+## Import records
+
+```bash
+docker compose run --rm web bundle exec rails runner "CoffeeShopImportJob.perform_now('https://raw.githubusercontent.com/Agilefreaks/test_oop/master/coffee_shops.csv')"
 ```
 
 ## How to run the test suite

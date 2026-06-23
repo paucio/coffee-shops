@@ -25,7 +25,7 @@ class CoffeeShopImportJob < ApplicationJob
     Import::Pipeline.new(
       downloader: Import::Downloaders::HttpDownloader.new,
       parser: Import::Parsers::CsvParser.new,
-      mapper: Import::Mappers::CoffeeShopCsvMapper.new
+      mapper: Import::Mappers::CoffeeShopMapper.new
     )
   end
 end

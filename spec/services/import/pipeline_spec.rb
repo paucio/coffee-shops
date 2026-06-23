@@ -9,7 +9,7 @@ RSpec.describe Import::Pipeline do
 
   let(:downloader) { instance_double(Import::Downloaders::HttpDownloader) }
   let(:parser) { instance_double(Import::Parsers::CsvParser) }
-  let(:mapper) { instance_double(Import::Mappers::CoffeeShopCsvMapper) }
+  let(:mapper) { instance_double(Import::Mappers::CoffeeShopMapper) }
   let(:tempfile) { instance_double(Tempfile) }
   let(:url) { "http://example.com/coffee_shops.csv" }
   let(:expected_columns) { %i[name x y] }

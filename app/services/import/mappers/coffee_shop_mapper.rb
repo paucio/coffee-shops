@@ -3,10 +3,12 @@
 # Mapper for converting CSV rows to CoffeeShop attributes.
 module Import
   module Mappers
-    class CoffeeShopCsvMapper < BaseMapper
+    class CoffeeShopMapper < BaseMapper
       def call(row)
+        raise ArgumentError, "blank name" if row[0].blank?
+
         {
-          name: row[0]&.strip,
+          name: row[0].strip,
           x: Float(row[1]),
           y: Float(row[2])
         }

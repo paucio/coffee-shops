@@ -4,7 +4,7 @@
 # It writes the response body to a temporary file.
 module Import
   module Downloaders
-    class HttpDownloader
+    class HttpDownloader < BaseDownloader
       def download(url)
         tempfile = Tempfile.new([ "import", ".csv" ])
 
