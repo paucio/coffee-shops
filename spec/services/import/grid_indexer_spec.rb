@@ -8,7 +8,7 @@ RSpec.describe Import::GridIndexer do
   let(:grid)  { Finder::Grids::CoffeeShop }
   let(:point) { instance_double(CoffeeShop, id: 42, x: 75.0, y: 125.0) }
 
-  let(:pipe) { instance_double("Redis::Pipeline") }
+  let(:pipe) { instance_double('Redis::Pipeline') }
 
   before do
     allow(REDIS).to receive(:pipelined).and_yield(pipe)
