@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# This class is responsible for orchestrating the import process.
+# It downloads a file from a given URL, parses it, and maps the parsed data to the desired format.
 module Import
   class Pipeline
     def initialize(downloader:, parser:, mapper:)
@@ -10,7 +12,7 @@ module Import
 
     def call(url)
       tempfile = downloader.download(url)
-      parser.parse(tempfile).filter_map { |row| mapper.call(row) }
+      parser.parse(tempfile, mapper.expected_columns).filter_map { |row| mapper.call(row) }
     ensure
       tempfile&.close!
     end

@@ -2,14 +2,18 @@
 
 require 'rails_helper'
 
-RSpec.describe Import::SpatialIndexer do
+RSpec.describe Import::GridIndexer do
   subject { described_class.new(grid: grid) }
 
   let(:grid)  { Finder::Grids::CoffeeShop }
   let(:point) { instance_double(CoffeeShop, id: 42, x: 75.0, y: 125.0) }
 
+  let(:pipe) { instance_double("Redis::Pipeline") }
+
   before do
+    allow(REDIS).to receive(:pipelined).and_yield(pipe)
     allow(REDIS).to receive(:sadd)
+    allow(pipe).to receive(:sadd)
   end
 
   describe '#index' do
@@ -31,11 +35,12 @@ RSpec.describe Import::SpatialIndexer do
       [ [ 42, 75.0, 125.0 ], [ 99, 0.0, 0.0 ] ]
     end
 
-    it 'indexes each point from the result rows' do
+    it 'indexes each point from the result rows inside a pipeline' do
       subject.multi_index(points)
 
-      expect(REDIS).to have_received(:sadd).with('coffee_shop_grid:x:1:y:2', 42)
-      expect(REDIS).to have_received(:sadd).with('coffee_shop_grid:x:0:y:0', 99)
+      expect(REDIS).to have_received(:pipelined)
+      expect(pipe).to have_received(:sadd).with('coffee_shop_grid:x:1:y:2', [ 42 ])
+      expect(pipe).to have_received(:sadd).with('coffee_shop_grid:x:0:y:0', [ 99 ])
     end
   end
 end

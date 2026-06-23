@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Base class for all parsers.
 module Import
   module Parsers
     class BaseParser

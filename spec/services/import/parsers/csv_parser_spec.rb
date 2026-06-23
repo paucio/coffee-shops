@@ -5,6 +5,8 @@ require "rails_helper"
 RSpec.describe Import::Parsers::CsvParser do
   subject { described_class.new }
 
+  let(:expected_columns) { %i[name x y] }
+
   describe "#parse" do
     let(:csv_data) { StringIO.new(csv_content) }
 
@@ -12,11 +14,11 @@ RSpec.describe Import::Parsers::CsvParser do
       let(:csv_content) { "Starbucks,1.0,2.0\nBlue Bottle,3.0,4.0\n" }
 
       it "returns an Enumerator" do
-        expect(subject.parse(csv_data)).to be_an(Enumerator)
+        expect(subject.parse(csv_data, expected_columns)).to be_an(Enumerator)
       end
 
       it "yields raw field arrays for each row" do
-        expect(subject.parse(csv_data).to_a).to eq([
+        expect(subject.parse(csv_data, expected_columns).to_a).to eq([
           [ "Starbucks", "1.0", "2.0" ],
           [ "Blue Bottle", "3.0", "4.0" ]
         ])
@@ -26,8 +28,8 @@ RSpec.describe Import::Parsers::CsvParser do
     context "with rows that have wrong column count" do
       let(:csv_content) { "Starbucks,1.0\nBlue Bottle,3.0,4.0\nToo,Many,Columns,Here\n" }
 
-      it "skips rows that do not have exactly EXPECTED_COLUMNS columns" do
-        expect(subject.parse(csv_data).to_a).to eq([
+      it "skips rows that do not have exactly expected_columns columns" do
+        expect(subject.parse(csv_data, expected_columns).to_a).to eq([
           [ "Blue Bottle", "3.0", "4.0" ]
         ])
       end
@@ -37,7 +39,7 @@ RSpec.describe Import::Parsers::CsvParser do
       let(:csv_content) { "" }
 
       it "yields no rows" do
-        expect(subject.parse(csv_data).to_a).to be_empty
+        expect(subject.parse(csv_data, expected_columns).to_a).to be_empty
       end
     end
   end

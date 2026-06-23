@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Service for performing bulk upsert operations.
+# It takes an importer that handles downloading, parsing, and mapping the data,
+# a model to persist the data to, and configuration for how to perform the upsert.
+# After persisting the data, it can also call a provided callback for additional processing.
 module Import
   class BulkUpsert
     BATCH_SIZE = 1000

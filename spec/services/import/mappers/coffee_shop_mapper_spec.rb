@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Import::Mappers::CoffeeShopCsvMapper do
+RSpec.describe Import::Mappers::CoffeeShopMapper do
   subject { described_class.new }
 
   describe "#call" do
@@ -28,8 +28,14 @@ RSpec.describe Import::Mappers::CoffeeShopCsvMapper do
     end
 
     context "with a nil name" do
-      it "returns nil for name without raising" do
-        expect(subject.call([ nil, "1.0", "2.0" ])).to include(name: nil)
+      it "returns nil" do
+        expect(subject.call([ nil, "1.0", "2.0" ])).to be_nil
+      end
+    end
+
+    context "with a blank name" do
+      it "returns nil" do
+        expect(subject.call([ "   ", "1.0", "2.0" ])).to be_nil
       end
     end
 

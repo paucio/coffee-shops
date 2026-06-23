@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
+# This service finds the nearest records to a given point (x, y) within a grid.
 module Finder
   class RadiusSearch
-    MAX_RADIUS = 10
+    MAX_RADIUS = 20
 
     def initialize(grid:)
       @grid  = grid
