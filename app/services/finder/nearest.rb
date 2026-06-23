@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# This service finds the nearest records to a given point (x, y) within a grid. 
-# It uses a RadiusSearch to find candidate records 
+# This service finds the nearest records to a given point (x, y) within a grid.
+# It uses a RadiusSearch to find candidate records
 # and then calculates the actual distances to return the closest ones.
 module Finder
   class Nearest
