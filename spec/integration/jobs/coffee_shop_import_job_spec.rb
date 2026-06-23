@@ -20,7 +20,7 @@ RSpec.describe CoffeeShopImportJob, :integration do
   before do
     allow(Faraday).to receive(:new).and_return(connection)
     allow(connection).to receive(:get).with(url) do |&block|
-      req = double("request", options: double("options").tap do |opts|
+      req = double('request', options: double('options').tap do |opts|
         allow(opts).to receive(:on_data=) { |proc| proc.call(csv_content, csv_content.bytesize, nil) }
       end)
       block.call(req)
@@ -52,12 +52,12 @@ RSpec.describe CoffeeShopImportJob, :integration do
     end
 
     context 'when the CSV contains existing records' do
-      let!(:existing_coffee_shop) { create(:coffee_shop, name: "Old Name", x: 1.0, y: 2.0) }
+      let!(:existing_coffee_shop) { create(:coffee_shop, name: 'Old Name', x: 1.0, y: 2.0) }
 
       it 'updates the name when a record with the same coordinates already exists' do
         expect { subject }.to change(CoffeeShop, :count).by(2)
 
-        expect(existing_coffee_shop.reload.name).to eq("Starbucks")
+        expect(existing_coffee_shop.reload.name).to eq('Starbucks')
       end
     end
 
@@ -65,7 +65,7 @@ RSpec.describe CoffeeShopImportJob, :integration do
       before do
         bad_csv = "Good Cafe,1.0,2.0\nBad Cafe,not_a_float,2.0\n"
         allow(connection).to receive(:get).with(url) do |&block|
-          req = double("request", options: double("options").tap do |opts|
+          req = double('request', options: double('options').tap do |opts|
             allow(opts).to receive(:on_data=) { |proc| proc.call(bad_csv, bad_csv.bytesize, nil) }
           end)
           block.call(req)
