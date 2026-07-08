@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 
 class BarsController < ApplicationController
   include NearestParamsValidation
@@ -17,11 +17,5 @@ class BarsController < ApplicationController
       grid: Finder::Grids::Bar,
       model: Bar
     )
-  end
-
-  def options
-    options = { x: params[:x].to_f, y: params[:y].to_f }
-    options[:limit] = params[:limit].to_i if params[:limit].present?
-    options
   end
 end
