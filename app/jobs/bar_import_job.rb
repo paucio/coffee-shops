@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 
-class BarsImportJob < ApplicationJob
+class BarImportJob < ApplicationJob
   queue_as :bars_queue
 
   retry_on Import::Errors::DownloadError, Faraday::ConnectionFailed, Faraday::TimeoutError,
