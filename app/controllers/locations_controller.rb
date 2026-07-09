@@ -1,7 +1,7 @@
 #
 
 class LocationsController < ApplicationController
-  include NearestParamsValidator
+  include NearestParamsValidation
 
   def nearest
     locations = finder.call(**options)
