@@ -22,9 +22,14 @@ RSpec.describe Finder::Grids::Base do
   end
 
   describe '.redis_key' do
+    it 'returns a string with the correct format' do
+      expect(described_class.redis_key(1, 2, 'bar')).to eq('bar_grid:x:1:y:2')
+    end
+  end
+
+  describe '.models' do
     it 'raises NotImplementedError' do
-      expect { described_class.redis_key(0, 0) }
-        .to raise_error(NotImplementedError, /redis_key/)
+      expect { described_class.models }.to raise_error(NotImplementedError)
     end
   end
 end

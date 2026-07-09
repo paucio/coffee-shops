@@ -14,8 +14,7 @@ class BarsController < ApplicationController
 
   def finder
     @finder ||= Finder::Nearest.new(
-      grid: Finder::Grids::Bar,
-      model: Bar
+      grid: Finder::Grids::Bar
     )
   end
 end

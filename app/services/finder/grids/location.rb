@@ -2,15 +2,9 @@
 
 module Finder
   module Grids
-    class Bar < Base
+    class Location < Base
       def self.models
-        [ ::Bar ]
-      end
-
-      private
-
-      def self.default_type
-        'bar'
+        [ ::Bar, ::CoffeeShop, ::Restaurant ]
       end
     end
   end

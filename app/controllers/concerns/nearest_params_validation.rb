@@ -26,8 +26,8 @@ module NearestParamsValidation
   end
 
   def options
-		options = { x: params[:x].to_f, y: params[:y].to_f }
-		options[:limit] = params[:limit].to_i if params[:limit].present?
-		options
-	end
+    options = { x: params[:x].to_f, y: params[:y].to_f }
+    options[:limit] = params[:limit].to_i if params[:limit].present?
+    options
+  end
 end

@@ -6,8 +6,14 @@
 module Finder
   module Grids
     class CoffeeShop < Base
-      def self.redis_key(x, y)
-        "coffee_shop_grid:x:#{x}:y:#{y}"
+      def self.models
+        [ ::CoffeeShop ]
+      end
+
+      private
+
+      def self.default_type
+        'coffee_shop'
       end
     end
   end

@@ -14,8 +14,7 @@ class CoffeeShopsController < ApplicationController
 
   def finder
     @finder ||= Finder::Nearest.new(
-      grid: Finder::Grids::CoffeeShop,
-      model: CoffeeShop
+      grid: Finder::Grids::CoffeeShop
     )
   end
 end

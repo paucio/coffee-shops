@@ -17,7 +17,7 @@ RSpec.describe BarSerializer do
   end
 
   it 'sets the correct type' do
-    expect(subject[:data]).to all(include(type: :coffee_shop))
+    expect(subject[:data]).to all(include(type: :bar))
   end
 
   it 'serializes all attributes' do

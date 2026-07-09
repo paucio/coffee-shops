@@ -8,6 +8,6 @@ class CreateRestaurants < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :restaurants, [:x, :y], unique: true
+    add_index :restaurants, [ :x, :y ], unique: true
   end
 end

@@ -45,7 +45,7 @@ RSpec.describe BarImportJob, :integration do
       it 'persists the correct attributes' do
         subject
 
-        expect(Bar.find_by(x: 1.0, y: 2.0).name).to eq('Starbucks')
+        expect(Bar.find_by(x: 1.0, y: 2.0).name).to eq('Brewry')
         expect(Bar.find_by(x: 3.5, y: 4.5).name).to eq('Blue Bottle')
         expect(Bar.find_by(x: 5.0, y: 6.0).name).to eq("Peet's Coffee")
       end
@@ -57,7 +57,7 @@ RSpec.describe BarImportJob, :integration do
       it 'updates the name when a record with the same coordinates already exists' do
         expect { subject }.to change(Bar, :count).by(2)
 
-        expect(existing_bar.reload.name).to eq('Starbucks')
+        expect(existing_bar.reload.name).to eq('Brewry')
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe BarImportJob, :integration do
       end
 
       it 'skips rows with invalid coordinates' do
-        expect { subject }.to change(CoffeeShop, :count).by(1)
+        expect { subject }.to change(Bar, :count).by(1)
       end
     end
   end

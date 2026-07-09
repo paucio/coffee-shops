@@ -1,21 +1,20 @@
 # frozen_string_literal: true
 
 class RestaurantsController < ApplicationController
-	include NearestParamsValidation
+  include NearestParamsValidation
 
-	before_action :validate_nearest_params!, only: :nearest
-    
-	def nearest
-		shops = finder.call(**options)
-		render json: RestaurantSerializer.from_hashes(shops)
-	end
+  before_action :validate_nearest_params!, only: :nearest
 
-	private
+  def nearest
+    shops = finder.call(**options)
+    render json: RestaurantSerializer.from_hashes(shops)
+  end
 
-	def finder
-		@finder ||= Finder::Nearest.new(
-			grid: Finder::Grids::Restaurant,
-			model: Restaurant
-		)
-	end
+  private
+
+  def finder
+    @finder ||= Finder::Nearest.new(
+      grid: Finder::Grids::Restaurant
+    )
+  end
 end

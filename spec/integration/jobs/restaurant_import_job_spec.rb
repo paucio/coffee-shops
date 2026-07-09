@@ -57,7 +57,7 @@ RSpec.describe RestaurantImportJob, :integration do
       it 'updates the name when a record with the same coordinates already exists' do
         expect { subject }.to change(Restaurant, :count).by(2)
 
-        expect(existing_restaurant.reload.name).to eq('Starbucks')
+        expect(existing_restaurant.reload.name).to eq('Stake House')
       end
     end
 
