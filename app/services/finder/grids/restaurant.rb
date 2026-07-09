@@ -10,7 +10,7 @@ module Finder
       private
 
       def self.default_type
-        'restaurant'
+        "restaurant"
       end
     end
   end

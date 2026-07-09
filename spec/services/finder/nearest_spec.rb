@@ -14,7 +14,7 @@ RSpec.describe Finder::Nearest do
 
   before do
     allow(Finder::RadiusSearch).to receive(:new).and_return(search)
-    allow(search).to receive(:call).and_return([{type: 'coffee_shop', ids: [1, 2, 3]}])
+    allow(search).to receive(:call).and_return([ { type: 'coffee_shop', ids: [ 1, 2, 3 ] } ])
     allow(Finder::SearchModel).to receive(:call).and_return([ shop_a, shop_b, shop_c ])
   end
 

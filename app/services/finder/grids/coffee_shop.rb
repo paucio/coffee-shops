@@ -13,7 +13,7 @@ module Finder
       private
 
       def self.default_type
-        'coffee_shop'
+        "coffee_shop"
       end
     end
   end

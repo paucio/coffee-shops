@@ -22,7 +22,7 @@ RSpec.describe Finder::RadiusSearch do
       it 'returns ids' do
         result = subject.call(cell_x: 1, cell_y: 2, limit: 3)
 
-        expect(result).to contain_exactly({ids: [10, 11, 12], type: "coffee_shop"})
+        expect(result).to contain_exactly({ ids: [ 10, 11, 12 ], type: "coffee_shop" })
       end
 
       it 'does not query beyond radius 0 since results are found' do
@@ -46,7 +46,7 @@ RSpec.describe Finder::RadiusSearch do
       it 'expands the radius until the limit is reached' do
         result = subject.call(cell_x: 0, cell_y: 0, limit: 3)
 
-        expect(result).to include({ids: [10, 11, 12], type: "coffee_shop"})
+        expect(result).to include({ ids: [ 10, 11, 12 ], type: "coffee_shop" })
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe Finder::RadiusSearch do
       it 'stops at MAX_RADIUS and returns what was found' do
         result = subject.call(cell_x: 0, cell_y: 0, limit: 3)
 
-        expect(result).to contain_exactly({ids: [10], type: "coffee_shop"})
+        expect(result).to contain_exactly({ ids: [ 10 ], type: "coffee_shop" })
       end
     end
 
@@ -89,8 +89,8 @@ RSpec.describe Finder::RadiusSearch do
         result = subject.call(cell_x: 0, cell_y: 0, limit: 3)
 
         expect(result).to contain_exactly(
-          { ids: [10], type: "coffee_shop" },
-          { ids: [20, 21], type: "restaurant" }
+          { ids: [ 10 ], type: "coffee_shop" },
+          { ids: [ 20, 21 ], type: "restaurant" }
         )
       end
     end
