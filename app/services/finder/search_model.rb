@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# This service is responsible for searching a model by its ids
+# and calculating the distance from a given point (x, y).
 module Finder
   class SearchModel
     def self.call(model:, ids:, x:, y:)

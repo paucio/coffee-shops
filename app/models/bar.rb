@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Bar < ApplicationRecord
     validates :name, presence: true
     validates :x, presence: true

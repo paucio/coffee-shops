@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Mapper for converting CSV rows to Bar attributes.
 module Import
   module Mappers
     class BarMapper < BaseMapper

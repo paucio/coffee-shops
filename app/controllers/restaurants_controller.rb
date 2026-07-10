@@ -6,8 +6,8 @@ class RestaurantsController < ApplicationController
   before_action :validate_nearest_params!, only: :nearest
 
   def nearest
-    shops = finder.call(**options)
-    render json: RestaurantSerializer.from_hashes(shops)
+    restaurants = finder.call(**options)
+    render json: RestaurantSerializer.from_hashes(restaurants)
   end
 
   private

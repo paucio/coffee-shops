@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Mapper for converting CSV rows to Restaurant attributes.
 module Import
   module Mappers
     class RestaurantMapper < BaseMapper

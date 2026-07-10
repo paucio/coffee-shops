@@ -6,8 +6,8 @@ class BarsController < ApplicationController
   before_action :validate_nearest_params!, only: :nearest
 
   def nearest
-    shops = finder.call(**options)
-    render json: BarSerializer.from_hashes(shops)
+    bars = finder.call(**options)
+    render json: BarSerializer.from_hashes(bars)
   end
 
   private
