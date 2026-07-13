@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-# This grid implementation is specific to coffee shops.
+# This grid implementation is specific to bars.
 # It defines how to generate Redis keys for storing
-# and retrieving coffee shop records based on their grid cell coordinates.
+# and retrieving bar records based on their grid cell coordinates.
 module Finder
   module Grids
-    class CoffeeShop < Base
+    class Bar < Base
       def self.models
-        [ ::CoffeeShop ]
+        [ ::Bar ]
       end
 
       private
 
       def self.default_type
-        "coffee_shop"
+        "bar"
       end
     end
   end

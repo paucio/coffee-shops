@@ -14,13 +14,14 @@ module Finder
       radius = 0
 
       while ids.size < limit && radius <= MAX_RADIUS
-        border_cells(cell_x, cell_y, radius).each do |key|
-          ids.concat(REDIS.smembers(key))
+        border_cells(cell_x, cell_y, radius).each do |cells|
+          ids.concat(cells)
         end
         radius += 1
       end
 
-      ids
+      ids.group_by { |h| h[:type] }
+         .map { |type, entries| { type: type, ids: entries.flat_map { |e| e[:ids] } } }
     end
 
     private
@@ -33,7 +34,14 @@ module Finder
           # only border cells avoiding duplicates from inner cells
           next unless dx.abs == radius || dy.abs == radius
 
-          grid.redis_key(cell_x + dx, cell_y + dy)
+          grid.models.flat_map do |model|
+            model_name = model.name.underscore
+            key = grid.redis_key(cell_x + dx, cell_y + dy, model_name)
+
+            REDIS.smembers(key).map do |id|
+              { type: model_name, ids: [ id ] }
+            end
+          end
         end
       end
     end

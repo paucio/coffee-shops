@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class CoffeeShopSerializer < BaseSerializer
+class LocationSerializer < BaseSerializer
   attributes :name, :x, :y, :distance
 end

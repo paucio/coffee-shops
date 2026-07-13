@@ -11,6 +11,12 @@ Rails.application.routes.draw do
 
   get "coffee_shops/nearest", to: "coffee_shops#nearest"
 
+  get "bars/nearest", to: "bars#nearest"
+
+  get "restaurants/nearest", to: "restaurants#nearest"
+
+  get "locations/nearest", to: "locations#nearest"
+
   # Defines the root path route ("/")
   # root "posts#index"
 end

@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe Finder::RadiusSearch do
-  subject { described_class.new(grid: Finder::Grids::CoffeeShop) }
+  let(:grid) { Finder::Grids::CoffeeShop }
+
+  subject { described_class.new(grid: grid) }
 
   before do
     allow(REDIS).to receive(:smembers).and_return([])
@@ -20,7 +22,7 @@ RSpec.describe Finder::RadiusSearch do
       it 'returns ids' do
         result = subject.call(cell_x: 1, cell_y: 2, limit: 3)
 
-        expect(result).to contain_exactly(10, 11, 12)
+        expect(result).to contain_exactly({ ids: [ 10, 11, 12 ], type: "coffee_shop" })
       end
 
       it 'does not query beyond radius 0 since results are found' do
@@ -44,7 +46,7 @@ RSpec.describe Finder::RadiusSearch do
       it 'expands the radius until the limit is reached' do
         result = subject.call(cell_x: 0, cell_y: 0, limit: 3)
 
-        expect(result).to include(10, 11, 12)
+        expect(result).to include({ ids: [ 10, 11, 12 ], type: "coffee_shop" })
       end
     end
 
@@ -58,7 +60,7 @@ RSpec.describe Finder::RadiusSearch do
       it 'stops at MAX_RADIUS and returns what was found' do
         result = subject.call(cell_x: 0, cell_y: 0, limit: 3)
 
-        expect(result).to contain_exactly(10)
+        expect(result).to contain_exactly({ ids: [ 10 ], type: "coffee_shop" })
       end
     end
 
@@ -67,6 +69,29 @@ RSpec.describe Finder::RadiusSearch do
         result = subject.call(cell_x: 0, cell_y: 0, limit: 3)
 
         expect(result).to be_empty
+      end
+    end
+
+    context 'when multiple types of models are found' do
+      let(:grid) { Finder::Grids::Location }
+
+      before do
+        allow(REDIS).to receive(:smembers)
+          .with('coffee_shop_grid:x:0:y:0')
+          .and_return([ 10 ])
+
+        allow(REDIS).to receive(:smembers)
+          .with('restaurant_grid:x:0:y:0')
+          .and_return([ 20, 21 ])
+      end
+
+      it 'returns results grouped by type' do
+        result = subject.call(cell_x: 0, cell_y: 0, limit: 3)
+
+        expect(result).to contain_exactly(
+          { ids: [ 10 ], type: "coffee_shop" },
+          { ids: [ 20, 21 ], type: "restaurant" }
+        )
       end
     end
   end

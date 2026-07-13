@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CoffeeShop < ApplicationRecord
+class Restaurant < ApplicationRecord
     validates :name, presence: true
     validates :x, presence: true
     validates :y, presence: true
